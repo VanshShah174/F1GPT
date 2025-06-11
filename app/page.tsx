@@ -4,13 +4,24 @@ import Image from "next/image";
 import f1GPTLogo from "./assets/F1GPT.png"
 import {useChat} from "@ai-sdk/react";
 import {Message} from "ai";
+import LoadingBubble from "./components/LoadingBubble";
+import PromptSuggestionsRow from "./components/PromptSuggestionsRow";
+import Bubble from "./components/Bubble";
 
 const Home = () => {
 
-    const {append, status , messages, input, handleInputChange, handleSubmit} = useChat();
+    const {append, isLoading, messages, input, handleInputChange, handleSubmit} = useChat();
 
+    const handlePrompt = (promptText) => {
+        const msg: Message = {
+            id: crypto.randomUUID(),
+            content: promptText,
+            role: 'user'
+        }
+        append(msg)
+    }
 
-    const noMessages = true
+    const noMessages = !messages || messages.length === 0
 
     return (
         <main>
@@ -25,22 +36,23 @@ const Home = () => {
                             We hope you enjoy!!
                         </p>
                         <br/>
-                        {/*<PromptSuggestionRow />*/}
+                        <PromptSuggestionsRow onPromptClick={handlePrompt}/>
                     </>
                 ) : (
                     <>
-                        {/*map messages onto text bubbles*/}
-                        {/*<LoadingBubble />*/}
+                        {messages.map((message, index) => <Bubble key={`message-${index}`} message={message}/>)}
+
+                        {isLoading && <LoadingBubble/>}
                     </>
                 )}
 
 
             </section>
-                <form onSubmit={handleSubmit}>
-                    <input className="question-box" onChange={handleInputChange} value={input}
-                           placeholder="Ask me something... "/>
-                    <input type="submit"/>
-                </form>
+            <form onSubmit={handleSubmit}>
+                <input className="question-box" onChange={handleInputChange} value={input}
+                       placeholder="Ask me something... "/>
+                <input type="submit"/>
+            </form>
 
         </main>
     )

@@ -12,7 +12,7 @@ body {
     background-image: url("assets/background.avif");
 }
 
-main{
+main {
     width: 80vw;
     height: 80vh;
     background: linear-gradient(to bottom, #f8f8f8, #cfcfcf);
@@ -21,9 +21,9 @@ main{
     align-items: center;
     flex-direction: column;
     justify-content: space-between;
-    padding:20px;
+    padding: 20px;
     text-align: center;
-    color : #383838;
+    color: #383838;
 }
 
 section {
@@ -60,7 +60,7 @@ input.question-box {
     border: none;
 }
 
-input[type="submit"]{
+input[type="submit"] {
     width: 15%;
     padding: 10px;
     font-size: 15px;
@@ -69,6 +69,54 @@ input[type="submit"]{
     color: #fff;
 }
 
-input:focus{
+.bubble {
+    margin: 8px;
+    padding: 8px;
+    font-size: 15px;
+    border: none;
+    color: #383838;
+    box-shadow: #959da533 0 8px 24px;
+    width: 80%;
+    text-align: left;
+}
+
+input:focus {
     outline: none;
 }
+
+.bubble.user {
+    border-radius: 20px 20px 0 20px;
+    background-color: #E1F4FFFF;
+    margin-left: auto;
+
+}
+
+.bubble.assistant {
+    border-radius: 20px 20px 20px 0;
+    background-color: #dce7ff;
+}
+
+.loader {
+    margin: 10px;
+    width: 60px;
+    aspect-ratio: 4;
+    background: no-repeat radial-gradient(circle closest-side, #383838 90%, #0000) 0 50%,
+    no-repeat radial-gradient(circle closest-side, #383838 90%, #0000) 50% 50%,
+    no-repeat radial-gradient(circle closest-side, #383838 90%, #0000) 100% 50%;
+    background-size: calc(100% / 3) 100%;
+    animation: loading 1s infinite linear;
+}
+
+@keyframes loading {
+    33% {
+        background-size: calc(100% / 3) 0, calc(100% / 3) 100%, calc(100% / 3) 100%;
+    }
+    50% {
+        background-size: calc(100% / 3) 100%, calc(100% / 3) 0, calc(100% / 3) 100%;
+    }
+    66% {
+        background-size: calc(100% / 3) 100%, calc(100% / 3) 100%, calc(100% / 3) 0;
+    }
+}
+
+
