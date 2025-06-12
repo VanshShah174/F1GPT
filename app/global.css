@@ -9,11 +9,12 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image: url("assets/background.avif");
+    /*background-image: url("assets/background.avif");*/
+    background-color: gray;
 }
 
 main {
-    width: 80vw;
+    width: 50vw;
     height: 80vh;
     background: linear-gradient(to bottom, #f8f8f8, #cfcfcf);
     border-radius: 15px;
@@ -35,11 +36,12 @@ section.populated {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    overflow: scroll;
+    /*overflow: scroll;*/
 }
 
 .starter-text {
     padding: 0 80px;
+    margin-bottom: 50px;
 }
 
 form {
@@ -48,6 +50,7 @@ form {
     display: flex;
     border-top: #828282 solid 2px;
     padding-top: 20px;
+    margin-bottom: 10px;
     border-radius: 0 0 10px 10px;
     overflow: hidden;
 }
@@ -96,6 +99,28 @@ input:focus {
     background-color: #dce7ff;
 }
 
+.prpmpt-suggestion-row {
+    width: 100%;
+}
+
+.prompt-suggestion-button {
+    margin: 8px;
+    padding: 8px;
+    font-size: 15px;
+    border: none;
+    background-color: #fff;
+    border-radius: 10px;
+    color: #383838;
+    box-shadow: #959da533 0 8px 24px;
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+.prompt-suggestion-button:hover {
+    background: #f3f4f6;             /* slightly darker grey */
+    transform: translateY(-2px);     /* lift it up a bit */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
 .loader {
     margin: 10px;
     width: 60px;
