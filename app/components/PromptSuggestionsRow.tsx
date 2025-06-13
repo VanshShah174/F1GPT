@@ -1,4 +1,3 @@
-import { useState } from "react";
 import PromptSuggestionButton from "./PromptSuggestionButton";
 
 interface Props {
@@ -13,21 +12,13 @@ const PromptSuggestionsRow = ({ onPromptClick }: Props) => {
         "Who is the current Formula One World Driver's Champion?",
     ];
 
-    // Track which index is active
-    const [activeIndex, setActiveIndex] = useState<number | null>(null);
-
     return (
         <div className="prompt-suggestion-row">
             {prompts.map((prompt, idx) => (
                 <PromptSuggestionButton
                     key={idx}
                     text={prompt}
-                    // when clicked, mark as active *and* fire the prompt
-                    onClick={() => {
-                        setActiveIndex(idx);
-                        onPromptClick(prompt);
-                    }}
-                    isActive={idx === activeIndex}
+                    onClick={() => onPromptClick(prompt)}
                 />
             ))}
         </div>
