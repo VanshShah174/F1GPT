@@ -6,8 +6,8 @@ interface Props {
 
 const PromptSuggestionsRow = ({ onPromptClick }: Props) => {
     const prompts = [
-        "Who is head of racing for Aston Martin's F1 Academy team?",
         "Who is the highest paid F1 driver?",
+        "Who won the inaugural F1 Academy Driver's Championship?",
         "Who will be the newest driver for Ferrari?",
         "Who is the current Formula One World Driver's Champion?",
     ];
