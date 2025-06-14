@@ -38,9 +38,9 @@ section {
 
 section.populated {
     flex: 1 1 auto;
-    height: 60vh; /* or flex:1 if you prefer */
+    height: 60vh;
     max-height: 70vh;
-    overflow-y: scroll; /* ← always show the gutter */
+    overflow-y: scroll;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

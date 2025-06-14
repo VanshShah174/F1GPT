@@ -37,7 +37,7 @@ const Home = () => {
     return (
         <main>
             <div className="logo-container">
-                <Image src={f1GPTLogo} alt="F1GPT logo" width={200} height={100} className="logoimg" priority sizes="(max-width: 768px) 15px, 200px" />
+                <Image src={f1GPTLogo} alt="F1GPT logo" width={200} height={100} />
             </div>
 
             <section
