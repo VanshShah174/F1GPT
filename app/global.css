@@ -9,21 +9,26 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    /*background-image: url("assets/background.avif");*/
     background-color: gray;
+}
+
+.logo-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
 main {
     width: 50vw;
     height: 80vh;
+    display: flex;
+    flex-direction: column;
     background: linear-gradient(to bottom, #f8f8f8, #cfcfcf);
     border-radius: 15px;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
     justify-content: space-between;
     padding: 20px;
-    text-align: center;
     color: #383838;
 }
 
@@ -32,11 +37,37 @@ section {
 }
 
 section.populated {
-    height: 100%;
+    flex: 1 1 auto;
+    height: 60vh; /* or flex:1 if you prefer */
+    max-height: 70vh;
+    overflow-y: scroll; /* ← always show the gutter */
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    /*overflow: scroll;*/
+    justify-content: flex-start;
+    padding-bottom: 10px;
+
+    /* make it a thin, always‐visible scrollbar */
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: rgba(0, 0, 0, 0.4) transparent; /* Firefox */
+    scrollbar-gutter: stable both-edges; /* reserve space so content doesn’t jump */
+}
+
+/* WebKit/Blink (Chrome, Safari) */
+section.populated::-webkit-scrollbar {
+    width: 8px;
+}
+
+section.populated::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+section.populated::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 4px;
+}
+
+section.populated > div:last-child {
+    margin-top: auto;
 }
 
 .starter-text {
@@ -45,59 +76,98 @@ section.populated {
 }
 
 form {
-    height: 50px;
     width: 100%;
     display: flex;
-    border-top: #828282 solid 2px;
-    padding-top: 20px;
-    margin-bottom: 10px;
+    align-items: flex-end;
+    border-top: 2px solid #828282;
+    padding: 16px 0 10px 0;
+    margin-bottom: 0;
     border-radius: 0 0 10px 10px;
-    overflow: hidden;
+    gap: 10px;
+    box-sizing: border-box;
 }
 
-input.question-box {
-    width: 85%;
-    padding: 10px;
-    font-size: 15px;
-    color: #383838;
+textarea.question-box {
+    width: 100%;
+    min-height: 40px;
+    max-height: 120px;
+    padding: 12px 16px;
+    font-size: 16px;
+    color: #222;
     border: none;
+    border-radius: 8px;
+    resize: none;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.2s;
+    font-family: inherit;
+    overflow-y: auto;
+    margin-right: 8px;
+}
+
+textarea.question-box:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #411b8d33;
+    background: #f9f7ff;
 }
 
 input[type="submit"] {
-    width: 15%;
-    padding: 10px;
-    font-size: 15px;
+    min-width: 80px;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 600;
     border: none;
-    background-color: #411b8d;
+    border-radius: 8px;
+    background: #411b8d;
     color: #fff;
+    cursor: pointer;
+    transition: background 0.2s, opacity 0.2s;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
 }
 
+input[type="submit"]:hover,
+input[type="submit"]:focus {
+    background: #2d0e5a;
+    opacity: 0.95;
+}
+
+input[type="submit"]:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* --- BUBBLE IMPROVEMENTS --- */
 .bubble {
-    margin: 8px;
-    padding: 8px;
+    display: block;
+    max-width: 70%;
+    margin: 12px 0;
+    padding: 14px 18px;
     font-size: 15px;
     border: none;
     color: #383838;
-    box-shadow: #959da533 0 8px 24px;
-    width: 80%;
-    text-align: left;
-}
-
-input:focus {
-    outline: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    word-break: break-word;
+    white-space: pre-wrap; /* wraps and preserves line breaks */
+    overflow-wrap: break-word;
 }
 
 .bubble.user {
+    background-color: #e1f4ff;
     border-radius: 20px 20px 0 20px;
-    background-color: #E1F4FFFF;
     margin-left: auto;
-
+    margin-right: 0;
+    text-align: left;
 }
 
 .bubble.assistant {
-    border-radius: 20px 20px 20px 0;
     background-color: #dce7ff;
+    border-radius: 20px 20px 20px 0;
+    margin-right: auto;
+    margin-left: 0;
+    text-align: left;
 }
+
+/* --- END BUBBLE IMPROVEMENTS --- */
 
 .prpmpt-suggestion-row {
     width: 100%;
@@ -117,10 +187,11 @@ input:focus {
 }
 
 .prompt-suggestion-button:hover {
-    background: #f3f4f6;             /* slightly darker grey */
-    transform: translateY(-2px);     /* lift it up a bit */
+    background: #f3f4f6;
+    transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+
 .loader {
     margin: 10px;
     width: 60px;
@@ -150,25 +221,33 @@ input:focus {
         height: 95vh;
         padding: 10px;
     }
+
     .starter-text {
         padding: 0 20px;
         margin-bottom: 30px;
         font-size: 15px;
     }
+
     .bubble {
-        width: 95%;
+        max-width: 90%;
         font-size: 14px;
+        padding: 10px 14px;
     }
+
     form {
         flex-direction: column;
         height: auto;
         padding-top: 10px;
     }
-    input.question-box,
-    input[type="submit"] {
-        width: 100%;
+
+    textarea.question-box {
+        width: 90vw;
         margin-bottom: 8px;
         font-size: 16px;
+    }
+
+    input[type="submit"] {
+        width: 100%;
     }
 }
 
@@ -179,23 +258,30 @@ input:focus {
         border-radius: 0;
         padding: 4px;
     }
+
     .starter-text {
         padding: 0 8px;
         margin-bottom: 15px;
         font-size: 13px;
     }
+
     .bubble {
-        width: 100%;
+        max-width: 100%;
         font-size: 13px;
-        padding: 6px;
+        padding: 6px 8px;
     }
+
     .prompt-suggestion-button {
         font-size: 13px;
         padding: 6px;
         margin: 4px;
     }
+
     form {
-        padding-top: 6px;
+        padding-top: 12px;
+    }
+
+    section.populated {
+        max-width: 50vh;
     }
 }
-
