@@ -10,7 +10,7 @@ import Bubble from "./components/Bubble";
 import { useRef, useEffect } from "react";
 
 const Home = () => {
-    const { append, isLoading, messages, input, handleInputChange, handleSubmit } =
+    const { append, isLoading, messages, input, handleInputChange, handleSubmit, setMessages } =
         useChat({ api: "/api/chat" });
 
     const handlePrompt = (promptText: string) => {
@@ -20,6 +20,20 @@ const Home = () => {
             role: "user",
         };
         append(msg);
+    };
+
+    // Edit handler for user messages
+    const handleEditUserMessage = (editIndex, newContent) => {
+        if (!messages || messages.length === 0) return;
+        // Remove the user message and the next assistant message (if any)
+        const updatedMessages = messages.filter((_, idx) => idx !== editIndex && idx !== editIndex + 1);
+        setMessages(updatedMessages);
+        // Re-send the updated prompt (append will add the user message and trigger assistant response)
+        append({
+            id: crypto.randomUUID(),
+            content: newContent,
+            role: "user",
+        });
     };
 
     const messagesContainerRef = useRef(null);
@@ -57,7 +71,15 @@ const Home = () => {
                 ) : (
                     <>
                         {messages.map((message, index) => (
-                            <Bubble key={message.id ?? index} message={message} />
+                            <Bubble
+                                key={message.id ?? index}
+                                message={message}
+                                onEdit={
+                                    message.role === "user"
+                                        ? (newContent) => handleEditUserMessage(index, newContent)
+                                        : undefined
+                                }
+                            />
                         ))}
                         {isLoading && <LoadingBubble />}
                         {/* This div ensures we always scroll to the latest message */}
